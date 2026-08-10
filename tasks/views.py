@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.http import HttpResponse
+from .form import TaskForm
 
 
 def home(request):
@@ -37,8 +38,7 @@ def signup(request):
                 return render(
                     request,
                     "signup.html",
-                    {"form": UserCreationForm,
-                     "error": "password do not match"},
+                    {"form": UserCreationForm, "error": "password do not match"},
                 )
 
         except IntegrityError as e:
@@ -89,3 +89,26 @@ def signout(request):
 
 def tasks(request):
     return render(request, "tasks.html")
+
+
+def create_task(request):
+
+    if request.method == "GET":
+        return render(request, "create_task.html", {"form": TaskForm()})
+    elif request.method == "POST":
+        try:
+
+            form = TaskForm(request.POST)
+            new_task = form.save(commit=False)
+            new_task.user = request.user
+            new_task.save()
+            return redirect("tasks")
+        except ValueError as e:
+            print(e)
+            return render(
+                request,
+                "create_task.html",
+                {"form": TaskForm(), "error": "Please provide valida data"},
+            )
+    else:
+        return HttpResponse("<h1>Metodo no permitido</h1>")
