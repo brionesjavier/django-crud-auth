@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django crud auth</title>
+  </head>
+  <body>
+    <nav>
+      <li><a href="{% url 'home'%}">home</a></li>
+      <li><a href="{% url 'tasks'%}">tasks</a></li>
+
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'logout'%}">logout</a></li>
+
+      {% else %}
+      <li><a href="{% url 'signin'%}">signin</a></li>
+      <li><a href="{% url 'signup'%}">signup</a></li>
+
+      {% endif %}
+    </nav>
+    {% block content %} {% endblock %}
+  </body>
+</html>
