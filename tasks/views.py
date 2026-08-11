@@ -6,6 +6,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse
 from .form import TaskForm
 from .models import Task
+from django.utils import timezone
 
 
 def home(request):
@@ -91,7 +92,15 @@ def signout(request):
 def tasks(request):
     tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True)
 
-    return render(request, "tasks.html", {"tasks": tasks})
+    return render(request, "tasks.html", {"tasks": tasks, "title": "tasks pending"})
+
+
+def tasks_completed(request):
+    tasks = Task.objects.filter(
+        user=request.user, datecompleted__isnull=False
+    ).order_by("-datecompleted")
+
+    return render(request, "tasks.html", {"tasks": tasks, "title": "tasks completed"})
 
 
 def create_task(request):
@@ -135,3 +144,20 @@ def task_detail(request, id):
                 "task_detail.html",
                 {"task": task, "form": form, "error": "Error updating task"},
             )
+
+
+def complete_task(request, id):
+    task = get_object_or_404(Task, pk=id, user=request.user)
+
+    if request.method == "POST":
+        task.datecompleted = timezone.now()
+        task.save()
+        return redirect("tasks")
+
+
+def delete_task(request, id):
+    task = get_object_or_404(Task, pk=id, user=request.user)
+
+    if request.method == "POST":
+        task.delete()
+        return redirect("tasks")

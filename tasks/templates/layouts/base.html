@@ -8,8 +8,8 @@
   <body>
     <nav>
       <li><a href="{% url 'home'%}">home</a></li>
-      <li><a href="{% url 'tasks'%}">tasks</a></li>
-
+      <li><a href="{% url 'tasks'%}">tasks pending</a></li>
+      <li><a href="{% url 'tasks_completed'%}">tasks completed</a></li>
       {% if user.is_authenticated %}
       <li><a href="{% url 'logout'%}">logout</a></li>
 

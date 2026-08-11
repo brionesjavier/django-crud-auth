@@ -1,7 +1,7 @@
 {% extends "layouts/base.html"%}
 
 {% block content%}
-<h1>task detail</h1>
+<h1>task pending</h1>
 
 {{error}}
 <form action="{% url 'task_detail' task.id %}" method="POST">
@@ -10,6 +10,15 @@
      {{form.as_p}}
 
     <button>Update</button>
+</form>
+
+<form action="{% url 'complete_task' task.id %}" method="POST">
+    {% csrf_token %}
+    <button>Complete</button>
+</form>
+<form action="{% url 'delete_task' task.id %}"  method="POST">
+    {% csrf_token %}
+    <button>Delete</button>
 </form>
 
 

@@ -1,7 +1,8 @@
 {% extends "layouts/base.html"%}
 
 {% block content%}
-<h1>tasks</h1>
+<h1>{{title}}</h1>
+<a href="{% url 'create_task'%}"> create tasks</a>
 
 <ul>
 {% for task in tasks%}
