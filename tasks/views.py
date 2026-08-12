@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse
 from .form import TaskForm
@@ -84,17 +85,20 @@ def signin(request):
         return HttpResponse("<h1> Metodo no permitido</h1>")
 
 
+@login_required
 def signout(request):
     logout(request)
     return redirect("home")
 
 
+@login_required
 def tasks(request):
     tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True)
 
     return render(request, "tasks.html", {"tasks": tasks, "title": "tasks pending"})
 
 
+@login_required
 def tasks_completed(request):
     tasks = Task.objects.filter(
         user=request.user, datecompleted__isnull=False
@@ -103,6 +107,7 @@ def tasks_completed(request):
     return render(request, "tasks.html", {"tasks": tasks, "title": "tasks completed"})
 
 
+@login_required
 def create_task(request):
 
     if request.method == "GET":
@@ -126,6 +131,7 @@ def create_task(request):
         return HttpResponse("<h1>Metodo no permitido</h1>")
 
 
+@login_required
 def task_detail(request, id):
     if request.method == "GET":
         task = get_object_or_404(Task, pk=id, user=request.user)
@@ -146,6 +152,7 @@ def task_detail(request, id):
             )
 
 
+@login_required
 def complete_task(request, id):
     task = get_object_or_404(Task, pk=id, user=request.user)
 
@@ -155,6 +162,7 @@ def complete_task(request, id):
         return redirect("tasks")
 
 
+@login_required
 def delete_task(request, id):
     task = get_object_or_404(Task, pk=id, user=request.user)
 
