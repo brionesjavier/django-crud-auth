@@ -1,7 +1,9 @@
 {% extends "layouts/base.html"%}
 
 {% block content %}
-<h1>Home</h1>
+<main class="container py-5">
+    <section class="card card-body">
+    <h1 class="display-1 text-center">Django App</h1>
 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet quo numquam sit repudiandae quisquam dolorem minus? In, recusandae consequuntur eveniet ducimus nemo exercitationem architecto et enim quis aperiam, soluta at?
 Deleniti quas, perspiciatis quisquam, consequuntur maxime sequi minima officia veniam, minus fugiat amet dolor? Similique rem excepturi nam, ex magni, nemo omnis harum maiores repellat dolore nulla nobis quisquam incidunt!
 Repellat itaque eos quis, eum aut magnam in reiciendis deleniti, deserunt voluptate vel nobis perspiciatis, quae distinctio nulla necessitatibus voluptatibus aspernatur dicta odio culpa! Cum accusantium fugit ullam nostrum harum?
@@ -102,5 +104,10 @@ Ipsa enim rem vero autem doloribus architecto quod id quam molestias accusamus i
 Ipsam dolorem itaque ea laboriosam perferendis neque vel numquam magni. Corporis sed, ipsum ut quidem impedit voluptates, porro velit sequi obcaecati accusamus itaque, culpa quibusdam reiciendis consectetur eveniet exercitationem ex!
 Praesentium odio ullam sed soluta sapiente! Ad minus reprehenderit vel impedit nulla eligendi, officiis eius suscipit unde ipsum voluptate voluptas similique voluptates nam ipsam velit consequatur minima dolorem. Quibusdam, tenetur.
 Facere fuga laboriosam repudiandae. Ea sequi at odit dolor officia numquam nesciunt quas asperiores quo quod? Qui ad totam molestiae provident dignissimos. Reiciendis mollitia id a itaque provident. Accusamus, ipsum.</p>
-
+<div class="text-center">
+    <a class="btn btn-primary" href="{% url 'signin'%}"> signin</a>
+    <a class="btn btn-primary" href="{% url 'signup'%}">signup</a>
+</div>
+</section>
+</main>
 {% endblock%}
