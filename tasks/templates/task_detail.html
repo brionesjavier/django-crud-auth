@@ -1,29 +1,30 @@
-{% extends "layouts/base.html"%} {% block content%}
-
+{% extends "layouts/base.html" %} {% block content %}
 <main class="container">
   <div class="row">
     <div class="col-md-4 offset-md-4 mt-4">
       <h1 class="text-secondary">Update task</h1>
 
-      {{error}}
-     <div>
-         <form action="{% url 'task_detail' task.id %}" method="POST">
-        {% csrf_token %} {{form.as_p}}
+      {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
 
-        <button class="btn btn-primary">Update</button>
+      <form action="{% url 'task_detail' task.id %}" method="POST">
+        {% csrf_token %} {{ form }}
+        <button class="btn btn-primary w-100">Update</button>
       </form>
-      <div class=" d-flex mt-5">
-        <form action="{% url 'complete_task' task.id %}" method="POST">
-        {% csrf_token %}
-        <button class="btn btn-secondary">Complete</button>
-      </form>
-      <form action="{% url 'delete_task' task.id %}" method="POST">
-        {% csrf_token %}
-        <button class="btn btn-danger">Delete</button>
-      </form>
+
+      <div class="d-flex gap-2 mt-3">
+        <form action="{% url 'complete_task' task.id %}" method="POST" class="flex-grow-1">
+          {% csrf_token %}
+          <button class="btn btn-secondary w-100">Complete</button>
+        </form>
+        <form action="{% url 'delete_task' task.id %}" method="POST" class="flex-grow-1">
+          {% csrf_token %}
+          <button class="btn btn-danger w-100" onclick="return confirm('¿Eliminar esta tarea?');">
+            Delete
+          </button>
+        </form>
       </div>
-      
-     </div>
     </div>
   </div>
 </main>
